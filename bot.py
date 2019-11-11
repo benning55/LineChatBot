@@ -37,6 +37,8 @@ def generating_answer(question_from_dailogflow_dict):
         answer_str = menu_recormentation()
     elif intent_group_question_str == 'BMI — Confirmed W and H': 
         answer_str = BMI_calculation(question_from_dailogflow_dict)
+    elif intent_group_question_str == 'MoneyDevide - Confirm':
+        answer_str = MoneyDevide(question_from_dailogflow_dict)
     else: answer_str = "ผมไม่เข้าใจ คุณต้องการอะไร"
 
     #Build answer dict 
@@ -50,6 +52,16 @@ def generating_answer(question_from_dailogflow_dict):
 def menu_recormentation(): #Function for recommending menu
     menu_name = 'สุกี้แห้ง'
     answer_function = menu_name + ' สิ น่ากินนะ'
+    return answer_function
+
+
+def MoneyDevide(respond_dict):
+    price = float(respond_dict["queryResult"]["outputContexts"][0]["parameters"]["Price.original"])
+    people = float(respond_dict["queryResult"]["outputContexts"][0]["parameters"]["People.original"])
+    place = str(respond_dict["queryResult"]["outputContexts"][0]["parameters"]["Place.original"])
+    result = price/people
+    rnd_result = (round(result, 2))
+    answer_function = f'แดกที่ {place} ตกคนละ {rnd_result} บาท'
     return answer_function
 
 def BMI_calculation(respond_dict): #Function for calculating BMI
